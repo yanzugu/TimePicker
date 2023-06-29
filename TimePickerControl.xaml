@@ -1,0 +1,437 @@
+﻿<UserControl x:Class="TimePicker.TimePickerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Width="320"
+             Height="380"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="calendarColor" Color="#2962ff" />
+
+        <Style x:Key="TransparentButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#AAA" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="UseLayoutRounding" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Content}"
+                                              TextBlock.FontSize="{TemplateBinding FontSize}"
+                                              TextBlock.Foreground="{TemplateBinding Foreground}" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#EEE" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MonthButton" TargetType="Button">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="UseLayoutRounding" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Content}"
+                                              TextBlock.FontSize="{TemplateBinding FontSize}"
+                                              TextBlock.Foreground="{TemplateBinding Foreground}" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource calendarColor}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style x:Key="CalendarButton" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="UseLayoutRounding" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Content}"
+                                              TextBlock.FontSize="{TemplateBinding FontSize}"
+                                              TextBlock.Foreground="{TemplateBinding Foreground}" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource calendarColor}" />
+                            </Trigger>
+
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="{StaticResource calendarColor}" />
+                                <Setter Property="BorderBrush" Value="Transparent" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#5d606b" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CalendarTodayButton" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="{StaticResource calendarColor}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="UseLayoutRounding" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <Grid>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Content="{TemplateBinding Content}"
+                                                  TextBlock.FontSize="{TemplateBinding FontSize}"
+                                                  TextBlock.Foreground="{TemplateBinding Foreground}" />
+
+                                <Line x:Name="line"
+                                      Margin="4,0,4,2"
+                                      VerticalAlignment="Bottom"
+                                      Stretch="Uniform"
+                                      Stroke="{TemplateBinding Foreground}"
+                                      StrokeThickness="2"
+                                      X1="0"
+                                      X2="10" />
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource calendarColor}" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="{StaticResource calendarColor}" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter TargetName="line" Property="Margin" Value="6,0,6,4" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="AllowDrop" Value="true" />
+            <Setter Property="Foreground" Value="#d1d4dc" />
+            <Setter Property="CaretBrush" Value="White" />
+            <Setter Property="BorderBrush" Value="#434651" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                        <Border Name="Border"
+                                Padding="4,0,0,0"
+                                Background="Transparent"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="0"
+                                          VerticalAlignment="Center" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource calendarColor}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Background="#1e222d">
+        <StackPanel Grid.Row="0" Margin="20,0">
+            <Grid Height="34" Margin="0,16,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="tbCurrentDate"
+                         Grid.Column="0"
+                         Margin="0,0,14,0"
+                         FontSize="14"
+                         FontWeight="Bold"
+                         PreviewKeyDown="tbCurrentDate_PreviewKeyDown"
+                         PreviewTextInput="tbCurrentDate_PreviewTextInput"
+                         TextAlignment="Left"
+                         TextChanged="tbCurrentDate_TextChanged" />
+
+                <Grid Margin="0,0,4,0" HorizontalAlignment="Right">
+                    <Border Width="20"
+                            Height="17"
+                            Margin="0,4,20,0"
+                            Background="Transparent"
+                            BorderBrush="#AAA"
+                            BorderThickness="1"
+                            CornerRadius="2" />
+
+                    <Path Width="10"
+                          Margin="0,0,20,15"
+                          Data="M0,0 0,1 M4,0 4,1"
+                          RenderOptions.EdgeMode="Aliased"
+                          Stretch="Uniform"
+                          Stroke="#AAA"
+                          StrokeThickness="1"
+                          UseLayoutRounding="True" />
+
+                    <Path Width="10"
+                          Margin="0,4,20,0"
+                          Data="M 9,3 12,3 12,6 9,6Z M 15,3 18,3 18,6 15,6 M 3,9 6,9 6,12 3,12Z M 9,9 12,9 12,12 9,12Z M 15,9 18,9 18,12 15,12 M 3,15 6,15 6,18 3,18Z M 9,15 12,15 12,18 9,18Z"
+                          Fill="#AAA"
+                          RenderOptions.EdgeMode="Aliased"
+                          Stretch="Uniform"
+                          StrokeThickness="1"
+                          UseLayoutRounding="True" />
+                </Grid>
+
+
+                <TextBox x:Name="tbCurrentTime"
+                         Grid.Column="1"
+                         FontSize="14"
+                         FontWeight="Bold"
+                         PreviewTextInput="tbCurrentTime_PreviewTextInput"
+                         Text="14:57"
+                         TextAlignment="Left"
+                         TextChanged="tbCurrentTime_TextChanged" />
+
+                <Grid Grid.Column="1"
+                      Margin="0,0,10,0"
+                      HorizontalAlignment="Right"
+                      Background="Transparent">
+                    <Ellipse Width="18"
+                             Height="18"
+                             Stroke="#AAA"
+                             StrokeThickness="1"
+                             UseLayoutRounding="True" />
+
+                    <Line Margin="4,18,0,0"
+                          Stroke="#AAA"
+                          StrokeThickness="1"
+                          UseLayoutRounding="True"
+                          X1="0"
+                          X2="6" />
+
+                    <Line Margin="10,12,0,0"
+                          RenderOptions.EdgeMode="Aliased"
+                          Stroke="#AAA"
+                          StrokeThickness="1"
+                          UseLayoutRounding="True"
+                          Y1="0"
+                          Y2="6" />
+                </Grid>
+            </Grid>
+
+            <Grid Height="30" Margin="0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="btnPreMonth"
+                        Grid.Column="0"
+                        Click="btnPreMonth_Click"
+                        Style="{StaticResource TransparentButton}">
+                    <Path Data="M7,0 0,7 7,14"
+                          Stroke="{Binding ElementName=btnPreMonth, Path=Foreground}"
+                          StrokeThickness="2" />
+                </Button>
+
+                <Button x:Name="btnCurrentMonth"
+                        Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        Click="btnCurrentMonth_Click"
+                        Content="April 2023"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Style="{StaticResource TransparentButton}" />
+
+                <Button x:Name="btnNextMonth"
+                        Grid.Column="2"
+                        Click="btnNextMonth_Click"
+                        Style="{StaticResource TransparentButton}">
+                    <Path Data="M0,0 7,7 0,14"
+                          Stroke="{Binding ElementName=btnNextMonth, Path=Foreground}"
+                          StrokeThickness="2" />
+                </Button>
+            </Grid>
+
+            <Border x:Name="borderDayTitle"
+                    Height="22"
+                    Margin="0,0,0,10"
+                    Background="#2a2e39"
+                    CornerRadius="5">
+                <UniformGrid VerticalAlignment="Center" Columns="7">
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="14"
+                               Foreground="#787b86"
+                               Text="Sun" />
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="14"
+                               Foreground="#787b86"
+                               Text="Mon" />
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="14"
+                               Foreground="#787b86"
+                               Text="Tue" />
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="14"
+                               Foreground="#787b86"
+                               Text="Wed" />
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="14"
+                               Foreground="#787b86"
+                               Text="Thu" />
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="14"
+                               Foreground="#787b86"
+                               Text="Fri" />
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="14"
+                               Foreground="#787b86"
+                               Text="Sat" />
+                </UniformGrid>
+            </Border>
+
+            <Grid>
+                <Grid x:Name="gridDay">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                </Grid>
+
+                <Grid x:Name="gridMonth"
+                      Height="200"
+                      Margin="0,14,0,0"
+                      Visibility="Collapsed">
+                    <UniformGrid Background="Transparent"
+                                 Columns="4"
+                                 Rows="3">
+                        <Button Click="btnMonth_Click"
+                                Content="Jan"
+                                Style="{StaticResource MonthButton}"
+                                Tag="1" />
+                        <Button Click="btnMonth_Click"
+                                Content="Feb"
+                                Style="{StaticResource MonthButton}"
+                                Tag="2" />
+                        <Button Click="btnMonth_Click"
+                                Content="Mar"
+                                Style="{StaticResource MonthButton}"
+                                Tag="3" />
+                        <Button Click="btnMonth_Click"
+                                Content="Apr"
+                                Style="{StaticResource MonthButton}"
+                                Tag="4" />
+                        <Button Click="btnMonth_Click"
+                                Content="May"
+                                Style="{StaticResource MonthButton}"
+                                Tag="5" />
+                        <Button Click="btnMonth_Click"
+                                Content="Jun"
+                                Style="{StaticResource MonthButton}"
+                                Tag="6" />
+                        <Button Click="btnMonth_Click"
+                                Content="Jul"
+                                Style="{StaticResource MonthButton}"
+                                Tag="7" />
+                        <Button Click="btnMonth_Click"
+                                Content="Aug"
+                                Style="{StaticResource MonthButton}"
+                                Tag="8" />
+                        <Button Click="btnMonth_Click"
+                                Content="Sep"
+                                Style="{StaticResource MonthButton}"
+                                Tag="9" />
+                        <Button Click="btnMonth_Click"
+                                Content="Oct"
+                                Style="{StaticResource MonthButton}"
+                                Tag="10" />
+                        <Button Click="btnMonth_Click"
+                                Content="Nov"
+                                Style="{StaticResource MonthButton}"
+                                Tag="11" />
+                        <Button Click="btnMonth_Click"
+                                Content="Dec"
+                                Style="{StaticResource MonthButton}"
+                                Tag="12" />
+                    </UniformGrid>
+                </Grid>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

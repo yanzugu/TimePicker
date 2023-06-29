@@ -1,0 +1,18 @@
+﻿<Window x:Class="TimePicker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:TimePicker"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="MainWindow"
+        Background="Black"
+        SizeToContent="WidthAndHeight"
+        mc:Ignorable="d">
+    <Grid Margin="5">
+        <StackPanel Orientation="Horizontal">
+            <local:TimePickerControl x:Name="tpc1" />
+            <local:TimePickerControl x:Name="tpc2" Margin="5,0" />
+            <local:TimePickerControl x:Name="tpc3" />
+        </StackPanel>
+    </Grid>
+</Window>
